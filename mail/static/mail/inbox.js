@@ -11,9 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
   load_mailbox('inbox');
 });
 
-function compose_email(data) {
-
-  console.log(data)
+function compose_email() {
 
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
@@ -184,6 +182,7 @@ function send_email(e) {
   const subject = document.querySelector('#compose-subject').value;
   const body = document.querySelector('#compose-body').value;
   const photo = document.querySelector('#compose-photo').value;
+  const change = document.querySelector('#compose-change').value;
 
   console.log(subject)
   console.log(body)
@@ -192,17 +191,15 @@ function send_email(e) {
   fetch('/emails', {
     method: 'POST',
     body: JSON.stringify({
-        subject: subject,
-        body: body,
-        photo: photo
-    })
+        "subject": subject,
+        "body": body,
+        "photo": photo,
+        "long": change
+    }),
   })
-  .then(response => response.json())
-  .then(result => {
-      // Print result
-      console.log(result);
-  });
-
-
-  
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+  })
+  return load_mailbox('sent')
 }
