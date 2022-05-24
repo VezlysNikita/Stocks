@@ -16,6 +16,10 @@ class Post(models.Model):
     read = models.BooleanField(default=False)
     archived = models.BooleanField(default=False)
     photo = models.URLField(blank=True)
+    long = models.BooleanField(default=False)
+    is_liked = models.BooleanField(default=False)
+    likes = models.IntegerField(default=0)
+
 
     def serialize(self):
         return {

@@ -51,6 +51,7 @@ def compose(request):
     # Get contents of email
     subject = data.get("subject", "")
     body = data.get("body", "")
+    photo = data.get("photo", "")
 
     # Create one email for each recipient, plus sender
     users = set()
@@ -62,7 +63,8 @@ def compose(request):
             sender=request.user,
             subject=subject,
             body=body,
-            read=user == request.user
+            read=user == request.user,
+            photo=photo
         )
         email.save()
         for recipient in recipients:

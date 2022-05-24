@@ -15,21 +15,7 @@ function compose_email(data) {
 
   console.log(data)
 
-  if (data.recipients == undefined) {
-    document.querySelector('#compose-recipients').value = '';
-    document.querySelector('#compose-subject').value = '';
-    document.querySelector('#compose-body').value = '';
-
-  }
-
-  else {
-    document.querySelector('#compose-recipients').value = data.sender;
-    document.querySelector('#compose-subject').value = 'Re: ' + data.sender;
-    document.querySelector('#compose-body').value = '';
-  }
-
   // Show compose view and hide other views
-
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
   document.querySelector('#email').style.display = 'none';
@@ -195,12 +181,10 @@ function send_email(e) {
 
   e.preventDefault()
 
-  const recipient = document.querySelector('#compose-recipients').value;
   const subject = document.querySelector('#compose-subject').value;
   const body = document.querySelector('#compose-body').value;
   const photo = document.querySelector('#compose-photo').value;
 
-  console.log(recipient)
   console.log(subject)
   console.log(body)
   console.log(photo)
@@ -208,9 +192,9 @@ function send_email(e) {
   fetch('/emails', {
     method: 'POST',
     body: JSON.stringify({
-        recipients: recipient,
         subject: subject,
-        body: body
+        body: body,
+        photo: photo
     })
   })
   .then(response => response.json())
