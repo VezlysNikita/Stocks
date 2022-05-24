@@ -71,6 +71,62 @@ def compose(request):
 
     return JsonResponse({"message": "Post sent successfully."}, status=201)
 
+
+@login_required
+def mailbox(request, mailbox):
+
+    # Filter emails returned based on mailbox
+    if mailbox == "inbox":
+        emails = Post.objects.filter(
+            user=request.user, recipients=request.user, archived=False
+        )
+    elif mailbox == "sent":
+        emails = Post.objects.filter(
+            user=request.user, sender=request.user
+        )
+    elif mailbox == "archive":
+        emails = Post.objects.filter(
+            user=request.user, recipients=request.user, archived=True
+        )
+    else:
+        return JsonResponse({"error": "Invalid mailbox."}, status=400)
+
+    # Return emails in reverse chronologial order
+    emails = emails.order_by("-timestamp").all()
+    return JsonResponse([email.serialize() for email in emails], safe=False)
+
+
+@csrf_exempt
+@login_required
+def email(request, email_id):
+
+    # Query for requested email
+    try:
+        email = Post.objects.get(user=request.user, pk=email_id)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+
+    # Return email contents
+    if request.method == "GET":
+        return JsonResponse(email.serialize())
+
+    # Update whether email is read or should be archived
+    elif request.method == "PUT":
+        data = json.loads(request.body)
+        if data.get("read") is not None:
+            email.read = data["read"]
+        if data.get("archived") is not None:
+            email.archived = data["archived"]
+        email.save()
+        return HttpResponse(status=204)
+
+    # Post must be via GET or PUT
+    else:
+        return JsonResponse({
+            "error": "GET or PUT request required."
+        }, status=400)
+
+
 def login_view(request):
     if request.method == "POST":
 
@@ -121,5 +177,3 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "mail/register.html")
-
-
