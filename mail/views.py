@@ -31,48 +31,41 @@ def compose(request):
 
     # Check recipient emails
     data = json.loads(request.body)
-    emails = [email.strip() for email in data.get("recipients").split(",")]
-    if emails == [""]:
-        return JsonResponse({
-            "error": "At least one recipient required."
-        }, status=400)
-
-    # Convert email addresses to users
-    recipients = []
-    for email in emails:
-        try:
-            user = User.objects.get(email=email)
-            recipients.append(user)
-        except User.DoesNotExist:
-            return JsonResponse({
-                "error": f"User with email {email} does not exist."
-            }, status=400)
 
     # Get contents of email
     subject = data.get("subject", "")
     body = data.get("body", "")
     photo = data.get("photo", "")
-    change = data.get("change", "")
+    change = data.get("long", "")
+
+    longshort = False
+
+    if change=="0":
+        longshort=True
+
+    elif change=="1":
+        longshort=False
+
+    print(longshort)
 
     # Create one email for each recipient, plus sender
     users = set()
+    
     users.add(request.user)
-    users.update(recipients)
     for user in users:
+        print(user)
         email = Post(
-            user=user,
-            sender=request.user,
-            subject=subject,
-            body=body,
-            read=user == request.user,
-            photo=photo,
-            long=change
-        )
-        email.save()
-        for recipient in recipients:
-            email.recipients.add(recipient)
-        email.save()
+        sender=request.user,
+        subject=subject,
+        body=body,
+        user = user,
+        photo=photo,
+        long=longshort
+    )
+    email.save()
 
+
+    
     return JsonResponse({"message": "Post sent successfully."}, status=201)
 
 
@@ -81,9 +74,7 @@ def mailbox(request, mailbox):
 
     # Filter emails returned based on mailbox
     if mailbox == "inbox":
-        emails = Post.objects.filter(
-            user=request.user, recipients=request.user, archived=False
-        )
+        emails = Post.objects.all()
     elif mailbox == "sent":
         emails = Post.objects.filter(
             user=request.user, sender=request.user
@@ -106,7 +97,7 @@ def email(request, email_id):
 
     # Query for requested email
     try:
-        email = Post.objects.get(user=request.user, pk=email_id)
+        email = Post.objects.get(pk=email_id)
     except Post.DoesNotExist:
         return JsonResponse({"error": "Post not found."}, status=404)
 

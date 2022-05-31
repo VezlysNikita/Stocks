@@ -26,7 +26,6 @@ class Post(models.Model):
         return {
             "id": self.id,
             "sender": self.sender.email,
-            "recipients": [user.email for user in self.recipients.all()],
             "subject": self.subject,
             "body": self.body,
             "timestamp": self.timestamp.strftime("%b %d %Y, %I:%M %p"),
