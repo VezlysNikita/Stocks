@@ -1,3 +1,5 @@
+const { SYSVAR_INSTRUCTIONS_PUBKEY } = require("@solana/web3.js");
+
 document.addEventListener('DOMContentLoaded', function() {
 
   // Use buttons to toggle between views
@@ -91,7 +93,6 @@ function load_mailbox(mailbox) {
         if (mailbox == 'archive') {
        
           const unarchived_btn = document.createElement('input');
-
           unarchived_btn.setAttribute('type','submit')
           
           unarchived_btn.setAttribute('value','Unarchive')
@@ -143,6 +144,15 @@ function load_email(id) {
 
     document.querySelector('#email').innerHTML = `<div>Subject: ${emailas.subject}</div><div>From: ${emailas.sender}</div><div>Date: ${emailas.timestamp}</div><div>${emailas.body}</div>`;
     //document.querySelector('#email').append(inemail_div);
+    
+    let like = document.createElement("BUTTON");
+    like.setAttribute("id", "like")
+    like.setAttribute("class", "bi bi-hand-thumbs-up")
+    like.setAttribute("placeholder", "like")
+    document.querySelector('#email').append(like)
+
+    document.querySelector('#like').addEventListener('click', send_email);
+    /*reply.addEventListener('click', () => like());*/
 
     /*
     const replybtn = document.createElement('input');
@@ -173,6 +183,22 @@ function load_email(id) {
     })
 
   })
+}
+
+
+function like() {
+
+  let likes
+
+  if (is_liked=false) {
+   
+    likes++
+
+  
+
+
+  }
+
 }
 
 function send_email(e) {

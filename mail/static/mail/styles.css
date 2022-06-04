@@ -5,3 +5,9 @@ textarea {
 #compose-photo {
     margin-top:15px;
 }
+
+#like {
+    width:150px;
+    height:70px;
+    background-color:rgb(224, 200, 131);
+}

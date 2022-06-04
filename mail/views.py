@@ -74,15 +74,13 @@ def mailbox(request, mailbox):
 
     # Filter emails returned based on mailbox
     if mailbox == "inbox":
-        emails = Post.objects.all()
+        emails = Post.objects.filter(archived=False)
     elif mailbox == "sent":
         emails = Post.objects.filter(
             user=request.user, sender=request.user
         )
     elif mailbox == "archive":
-        emails = Post.objects.filter(
-            user=request.user, recipients=request.user, archived=True
-        )
+        emails = Post.objects.filter(archived=True)
     else:
         return JsonResponse({"error": "Invalid mailbox."}, status=400)
 
@@ -146,6 +144,13 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
+def likes(request):
+
+    if Post.is_liked == False:
+        Post.likes = Post.likes + 1
+        Post.save
+return HttpResponseRedirect(reverse("index"))
+
 
 def register(request):
     if request.method == "POST":
@@ -172,3 +177,4 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "mail/register.html")
+
