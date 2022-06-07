@@ -14,7 +14,9 @@ def index(request):
 
     # Authenticated users view their inbox
     if request.user.is_authenticated:
-        return render(request, "mail/inbox.html")
+        return render(request, "mail/inbox.html", {
+            "posts": Post.objects.all()
+        })
 
     # Everyone else is prompted to sign in
     else:
@@ -63,8 +65,6 @@ def compose(request):
         long=longshort
     )
     email.save()
-
-
     
     return JsonResponse({"message": "Post sent successfully."}, status=201)
 
@@ -144,12 +144,12 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-def likes(request):
+def likes(request, id):
 
-    if Post.is_liked == False:
-        Post.likes = Post.likes + 1
-        Post.save
-return HttpResponseRedirect(reverse("index"))
+    data = json.loads(request.body)
+
+    post = Post.objects.get(pk=data.id)
+    print(post)
 
 
 def register(request):
