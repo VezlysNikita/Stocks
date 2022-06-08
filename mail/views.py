@@ -48,8 +48,6 @@ def compose(request):
     elif change=="1":
         longshort=False
 
-    print(longshort)
-
     # Create one email for each recipient, plus sender
     users = set()
     
@@ -144,13 +142,21 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-def likes(request, id):
+@csrf_exempt
+@login_required
+def likes(request):
+    id = None
+    if request.method == "POST":
+        data = json.loads(request.body)
 
-    data = json.loads(request.body)
+        like = data.get("like")
+        id = data.get("id")
 
-    post = Post.objects.get(pk=data.id)
-    print(post)
-
+        Post.objects.filter(pk=id).update(likes=like)
+        #return?
+    else:
+        post = Post.objects.get(pk=id)
+        return JsonResponse({'like': post.likes})
 
 def register(request):
     if request.method == "POST":

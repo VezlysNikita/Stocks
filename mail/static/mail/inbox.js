@@ -19,6 +19,9 @@ function compose_email() {
   document.querySelector('#email').style.display = 'none';
 
   // Clear out composition fields
+  document.querySelector('#compose-subject').innerHTML = '';
+  document.querySelector('#compose-body').innerHTML = '';
+  document.querySelector('#compose-photo').innerHTML = '';
 
 }
 
@@ -84,7 +87,7 @@ function load_mailbox(mailbox) {
               })
             })
             location.reload();
-          });
+          });          
         }
 
         
@@ -113,9 +116,9 @@ function load_mailbox(mailbox) {
         
       }
   });
-
 }
 
+let like;
 
 function load_email(id) {
 
@@ -128,8 +131,6 @@ function load_email(id) {
   fetch(`emails/${id}`)
   .then(response => response.json())
   .then(emailas => {
-
-
 
     //const inemail_div = document.createElement('div');
     //inemail_div.classList.add('inemail');
@@ -175,13 +176,28 @@ function load_email(id) {
     })
 
   })
+  fetch('/likes')
+  .then(respone => respone.json())
+  .then(info => {
+    like = info.like
+  })
 }
 
 
 function likes(id) {
 
-  fetch(`emails/likes`, {
-    
+  like++;
+
+  fetch(`/likes`, {
+    method: 'POST',
+    body: JSON.stringify({
+      'id': id,
+      'like': like
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    console.log(result)
   })
 
 }
