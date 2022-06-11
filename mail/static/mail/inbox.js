@@ -118,7 +118,7 @@ function load_mailbox(mailbox) {
   });
 }
 
-let like;
+
 
 function load_email(id) {
 
@@ -127,15 +127,23 @@ function load_email(id) {
   document.querySelector('#email').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
 
+  let like;
 
-  fetch(`emails/${id}`)
+  fetch( `/likes/${id}`)
+  .then(respone => respone.json())
+  .then(info => {
+    like = info.like
+    return fetch('emails/' + id);
+  })
+
   .then(response => response.json())
   .then(emailas => {
+    console.log(like)
 
     //const inemail_div = document.createElement('div');
     //inemail_div.classList.add('inemail');
 
-    document.querySelector('#email').innerHTML = `<div>Subject: ${emailas.subject}</div><div>From: ${emailas.sender}</div><div>Date: ${emailas.timestamp}</div><div>${emailas.body}</div>`;
+    document.querySelector('#email').innerHTML = `<div>Subject: ${emailas.subject}</div><div>From: ${emailas.sender}</div><div>Date: ${emailas.timestamp}</div><div>${emailas.body}</div><div>Likes: ${like}</div>`;
     //document.querySelector('#email').append(inemail_div);
     
     let like = document.createElement("button");
@@ -145,21 +153,7 @@ function load_email(id) {
     document.querySelector('#email').append(like)
 
     document.querySelector('#like').addEventListener('click', likes(id));
-    /*reply.addEventListener('click', () => like());*/
-
-    /*
-    const replybtn = document.createElement('input');
-
-    replybtn.setAttribute('type','submit')
     
-    replybtn.setAttribute('value','Reply')
-
-    replybtn.classList.add('reply');
-
-    document.querySelector('#email').append(replybtn);
-
-    
-    */
 
     let reply = document.createElement("BUTTON");
     reply.innerHTML = "Reply";
@@ -174,13 +168,8 @@ function load_email(id) {
     body: JSON.stringify({
       read: true
     })
-
   })
-  fetch('/likes')
-  .then(respone => respone.json())
-  .then(info => {
-    like = info.like
-  })
+  
 }
 
 
@@ -188,10 +177,9 @@ function likes(id) {
 
   like++;
 
-  fetch(`/likes`, {
+  fetch(`/likes/${id}`, {
     method: 'POST',
     body: JSON.stringify({
-      'id': id,
       'like': like
     })
   })

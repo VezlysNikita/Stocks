@@ -144,13 +144,12 @@ def logout_view(request):
 
 @csrf_exempt
 @login_required
-def likes(request):
-    id = None
+def likes(request, post_id):
+    id = post_id
     if request.method == "POST":
         data = json.loads(request.body)
 
         like = data.get("like")
-        id = data.get("id")
 
         Post.objects.filter(pk=id).update(likes=like)
         #return?
