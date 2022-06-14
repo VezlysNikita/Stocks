@@ -45,8 +45,8 @@ function load_mailbox(mailbox) {
       for (let i = 0; i < emails.length; i++) {
         const email_div = document.createElement('div');
         email_div.classList.add('email');
-
-        email_div.innerHTML = `<div>Subject: ${emails[i].subject}</div><div>From: ${emails[i].sender}</div><div>Date: ${emails[i].timestamp}</div>`;
+        console.log(emails[i].photo)
+        email_div.innerHTML = `<div>Subject: ${emails[i].subject}</div><div>From: ${emails[i].sender}</div><div><img src="${emails[i].photo}"></div><div>Date: ${emails[i].timestamp}</div>`;
 
         document.querySelector('#emails-view').append(email_div);
 
@@ -118,7 +118,7 @@ function load_mailbox(mailbox) {
   });
 }
 
-
+let like_count;
 
 function load_email(id) {
 
@@ -127,23 +127,20 @@ function load_email(id) {
   document.querySelector('#email').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
 
-  let like;
 
   fetch( `/likes/${id}`)
   .then(respone => respone.json())
   .then(info => {
-    like = info.like
+    like_count = info.like
     return fetch('emails/' + id);
   })
 
   .then(response => response.json())
   .then(emailas => {
-    console.log(like)
-
+    
     //const inemail_div = document.createElement('div');
     //inemail_div.classList.add('inemail');
-
-    document.querySelector('#email').innerHTML = `<div>Subject: ${emailas.subject}</div><div>From: ${emailas.sender}</div><div>Date: ${emailas.timestamp}</div><div>${emailas.body}</div><div>Likes: ${like}</div>`;
+    document.querySelector('#email').innerHTML = `<div>Subject: ${emailas.subject}</div><div>From: ${emailas.sender}</div><div>Date: ${emailas.timestamp}</div><div>${emailas.body}</div><div><img src="${emailas.photo}"></div><div id="like_div">Likes: ${like_count}</div>`;
     //document.querySelector('#email').append(inemail_div);
     
     let like = document.createElement("button");
@@ -152,15 +149,14 @@ function load_email(id) {
     like.setAttribute("placeholder", "like")
     document.querySelector('#email').append(like)
 
-    document.querySelector('#like').addEventListener('click', likes(id));
+    like.addEventListener('click', () => likes(id));
     
 
     let reply = document.createElement("BUTTON");
     reply.innerHTML = "Reply";
     document.querySelector('#email').append(reply)
     reply.addEventListener('click', () => compose_email(emailas));
-
-  });
+    });
 
   fetch(`emails/${id}`,{
     method: 'PUT',
@@ -175,19 +171,18 @@ function load_email(id) {
 
 function likes(id) {
 
-  like++;
+  like_count++;
 
   fetch(`/likes/${id}`, {
     method: 'POST',
     body: JSON.stringify({
-      'like': like
+      'like': like_count
     })
   })
   .then(response => response.json())
   .then(result => {
-    console.log(result)
+    document.querySelector('#like_div').innerHTML = like_count;
   })
-
 }
 
 function send_email(e) {

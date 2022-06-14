@@ -53,7 +53,6 @@ def compose(request):
     
     users.add(request.user)
     for user in users:
-        print(user)
         email = Post(
         sender=request.user,
         subject=subject,
@@ -152,7 +151,7 @@ def likes(request, post_id):
         like = data.get("like")
 
         Post.objects.filter(pk=id).update(likes=like)
-        #return?
+        return HttpResponse(status=201)
     else:
         post = Post.objects.get(pk=id)
         return JsonResponse({'like': post.likes})
