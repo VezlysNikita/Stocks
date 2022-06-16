@@ -71,9 +71,6 @@ textarea {
     /*background-image: url(images/bluecircle.png);*/
 }
 
-#title {
-    /*margin-top:20px;*/
-}
 
 /*
 .circles {
@@ -119,12 +116,6 @@ textarea {
   box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
 }
 
-.button-20:disabled {
-  background-image: none;
-  box-shadow: none;
-  opacity: .65;
-  pointer-events: none;
-}
 
 #logout {
     color:red;

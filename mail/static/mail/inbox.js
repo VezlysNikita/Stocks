@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
   document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
-  document.querySelector('#compose').addEventListener('click', compose_email);
+  document.querySelector('#compose2').addEventListener('click', compose_email);
   document.querySelector('#sendmail').addEventListener('click', send_email);
 
   // By default, load the inbox
@@ -17,6 +17,8 @@ function compose_email() {
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
   document.querySelector('#email').style.display = 'none';
+  document.querySelector('#intro').style.display = 'none';
+  document.querySelector('#compose2').style.display = 'none';
 
   // Clear out composition fields
   document.querySelector('#compose-subject').value = '';
@@ -31,6 +33,9 @@ function load_mailbox(mailbox) {
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
   document.querySelector('#email').style.display = 'none';
+  document.querySelector('#intro').style.display = 'none';
+  document.querySelector('#compose2').style.display = 'none';
+  
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
@@ -40,15 +45,6 @@ function load_mailbox(mailbox) {
   .then(emails => {
 
       // Print emails
-
-      const intro_div = document.createElement('div');
-      intro_div.classList.add('intro');
-      intro_div.innerHTML = `<div class="introdiv"><div class="intro" id="title">$tockFull</div><div id="introdesc"><p>Have any thoughts about a stock? Share them with our users online by creating a post!</p></div></div>`;
-
-      document.querySelector('#intro').append(intro_div);
-
-      document.querySelector('#compose2').addEventListener('click', compose_email);
-
       for (let i = 0; i < emails.length; i++) {
         const email_div = document.createElement('div');
         email_div.classList.add('email');
@@ -64,7 +60,9 @@ function load_mailbox(mailbox) {
 
         if (mailbox == 'inbox') {
 
-        
+          document.querySelector('#intro').style.display = 'block';
+          document.querySelector('#compose2').style.display = 'block';
+
           const archived_btn = document.createElement('input');
 
           archived_btn.setAttribute('type','submit')
@@ -90,7 +88,7 @@ function load_mailbox(mailbox) {
 
         
         if (mailbox == 'archive') {
-       
+
           const unarchived_btn = document.createElement('input');
           unarchived_btn.setAttribute('type','submit')
           
@@ -124,6 +122,8 @@ function load_email(id) {
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#email').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
+  document.querySelector('#intro').style.display = 'none';
+  document.querySelector('#compose2').style.display = 'none';
 
 
   fetch( `/likes/${id}`)
