@@ -19,9 +19,9 @@ function compose_email() {
   document.querySelector('#email').style.display = 'none';
 
   // Clear out composition fields
-  document.querySelector('#compose-subject').innerHTML = '';
-  document.querySelector('#compose-body').innerHTML = '';
-  document.querySelector('#compose-photo').innerHTML = '';
+  document.querySelector('#compose-subject').value = '';
+  document.querySelector('#compose-body').value = '';
+  document.querySelector('#compose-photo').value = '';
 
 }
 
@@ -52,7 +52,6 @@ function load_mailbox(mailbox) {
       for (let i = 0; i < emails.length; i++) {
         const email_div = document.createElement('div');
         email_div.classList.add('email');
-        console.log(emails[i].photo)
         email_div.innerHTML = `<div class="subject">Subject: ${emails[i].subject}</div><div class="from">From: ${emails[i].sender}</div><div class="image"><img src="${emails[i].photo}"></div><div class="date">Date: ${emails[i].timestamp}</div>`;
 
         document.querySelector('#emails-view').append(email_div);
@@ -137,10 +136,15 @@ function load_email(id) {
   .then(response => response.json())
   .then(emailas => {
     
-    //const inemail_div = document.createElement('div');
-    //inemail_div.classList.add('inemail');
-    document.querySelector('#email').innerHTML = `<div>Subject: ${emailas.subject}</div><div>From: ${emailas.sender}</div><div>Date: ${emailas.timestamp}</div><div>${emailas.body}</div><div><img src="${emailas.photo}"></div><div id="like_div">Likes: ${like_count}</div>`;
-    //document.querySelector('#email').append(inemail_div);
+    let change;
+    if (emails.long == true) {
+      change = 'long';
+    }
+    else {
+      change = 'short'
+    }
+
+    document.querySelector('#email').innerHTML = `<div>Change: ${change}</div><div>Subject: ${emailas.subject}</div><div>From: ${emailas.sender}</div><div>Date: ${emailas.timestamp}</div><div>${emailas.body}</div><div><img src="${emailas.photo}"></div><div id="like_div">Likes: ${like_count}</div>`;
     
     let like = document.createElement("button");
     like.setAttribute("id", "like")
@@ -164,9 +168,7 @@ function load_email(id) {
       read: true
     })
   })
-  
 }
-
 
 function likes(id) {
 
@@ -179,9 +181,8 @@ function likes(id) {
     })
   })
   .then(response => response.json())
-  .then(result => {
-    document.querySelector('#like_div').innerHTML = like_count;
-  })
+  document.querySelector('#like_div').innerHTML = like_count;
+
 }
 
 function send_email(e) {
@@ -203,8 +204,5 @@ function send_email(e) {
     }),
   })
   .then((response) => response.json())
-  .then((result) => {
-    console.log(result)
-  })
   return load_mailbox('sent')
 }
