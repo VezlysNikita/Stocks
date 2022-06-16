@@ -11,3 +11,131 @@ textarea {
     height:70px;
     background-color:rgb(224, 200, 131);
 }
+
+.email {
+    border: 12px solid rgb(142, 142, 255);
+    height:500px;
+    width:400px;
+    text-align:center;
+    font-family: DrukWideBold;
+}
+
+#emails-view {
+    width:1000px;
+    display: grid;
+    gap: 1rem;
+    grid-auto-flow: column;
+}
+
+#compose2 {
+    position:absolute;
+    top:75%;
+    size:100px;
+
+    background-image: linear-gradient(to right, #00d2ff 0%, #3a7bd5  51%, #00d2ff  100%);
+    margin: 10px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+    outline:none;
+}
+
+#compose2:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+#introdesc {
+    position: absolute;
+    top:30%;
+    margin-left:7px;
+    font-family: var(--bs-font-sans-serif);
+    font-size:20px;
+}
+
+
+
+.intro {
+    font-family: DrukWideBold;
+    font-size: 70px;
+    color: linear-gradient( 94.3deg,  rgba(26,33,64,1) 10.9%, rgba(81,84,115,1) 87.1% );
+    height:600px;
+    
+    /*background-image: url(images/bluecircle.png);*/
+}
+
+#title {
+    /*margin-top:20px;*/
+}
+
+/*
+.circles {
+    position: relative;
+    display:block;
+    background-image: url(bluecircle.png);
+    height:300px;
+    width:300px;
+    justify-content: center;
+    align-items: center;
+}
+*/
+
+.button-20 {
+    font-family:DrukWideBold;
+}
+
+.button-20:focus:not(:focus-visible),
+.button-20:focus {
+  outline: 0;
+}
+
+.button-20:hover {
+  background-color: #8381e4;
+  border-color: #3733E5;
+  color:white;
+}
+
+.button-20:focus {
+  background-color: #413FC5;
+  border-color: #3E3BBA;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset, rgba(46, 54, 80, 0.075) 0 1px 1px, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
+}
+
+.button-20:active {
+  background-color: #3E3BBA;
+  background-image: none;
+  border-color: #3A38AE;
+  box-shadow: rgba(171, 178, 202, 0.842) 0 3px 5px inset;
+}
+
+.button-20:active:focus {
+  box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
+}
+
+.button-20:disabled {
+  background-image: none;
+  box-shadow: none;
+  opacity: .65;
+  pointer-events: none;
+}
+
+#logout {
+    color:red;
+}
+
+#logout:hover {
+    background-color:red;
+    color:white;
+}
+
+#useremail {
+    margin-bottom:20px;
+    margin-top:10px;
+}

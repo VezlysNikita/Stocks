@@ -30,5 +30,6 @@ class Post(models.Model):
             "body": self.body,
             "timestamp": self.timestamp.strftime("%b %d %Y, %I:%M %p"),
             "read": self.read,
-            "archived": self.archived
+            "archived": self.archived,
+            "photo": self.photo
         }

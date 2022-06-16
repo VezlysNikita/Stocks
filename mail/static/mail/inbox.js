@@ -41,27 +41,26 @@ function load_mailbox(mailbox) {
 
       // Print emails
 
+      const intro_div = document.createElement('div');
+      intro_div.classList.add('intro');
+      intro_div.innerHTML = `<div class="introdiv"><div class="intro" id="title">$tockFull</div><div id="introdesc"><p>Have any thoughts about a stock? Share them with our users online by creating a post!</p></div></div>`;
+
+      document.querySelector('#intro').append(intro_div);
+
+      document.querySelector('#compose2').addEventListener('click', compose_email);
 
       for (let i = 0; i < emails.length; i++) {
         const email_div = document.createElement('div');
         email_div.classList.add('email');
         console.log(emails[i].photo)
-        email_div.innerHTML = `<div>Subject: ${emails[i].subject}</div><div>From: ${emails[i].sender}</div><div><img src="${emails[i].photo}"></div><div>Date: ${emails[i].timestamp}</div>`;
+        email_div.innerHTML = `<div class="subject">Subject: ${emails[i].subject}</div><div class="from">From: ${emails[i].sender}</div><div class="image"><img src="${emails[i].photo}"></div><div class="date">Date: ${emails[i].timestamp}</div>`;
 
         document.querySelector('#emails-view').append(email_div);
 
 
         email_div.addEventListener('click', () => load_email(emails[i].id));
-        
-        if(emails[i].read == true) {
 
-          email_div.style.backgroundColor = 'grey';
-    
-        }
-
-        else {
-          email_div.style.backgroundColor = 'white';
-        }
+        email_div.style.backgroundColor = 'white';
 
 
         if (mailbox == 'inbox') {
