@@ -30,7 +30,7 @@ function compose_email() {
 function load_mailbox(mailbox) {
   
   // Show the mailbox and hide other views
-  document.querySelector('#emails-view').style.display = 'block';
+  document.querySelector('#emails-view').style.display = 'grid';
   document.querySelector('#compose-view').style.display = 'none';
   document.querySelector('#email').style.display = 'none';
   document.querySelector('#intro').style.display = 'none';
@@ -39,7 +39,7 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
-
+  
   fetch('/emails/'+ mailbox)
   .then(response => response.json())
   .then(emails => {
@@ -66,12 +66,13 @@ function load_mailbox(mailbox) {
           const archived_btn = document.createElement('input');
 
           archived_btn.setAttribute('type','submit')
+          archived_btn.setAttribute('class', 'archive_btn')
           
           archived_btn.setAttribute('value','Archive')
 
           archived_btn.classList.add('archivedbtn');
 
-          document.querySelector('#emails-view').append(archived_btn);
+          email_div.append(archived_btn);
 
           archived_btn.addEventListener('click', () => {
 
@@ -91,12 +92,12 @@ function load_mailbox(mailbox) {
 
           const unarchived_btn = document.createElement('input');
           unarchived_btn.setAttribute('type','submit')
-          
+          unarchived_btn.setAttribute('class','archive_btn')
           unarchived_btn.setAttribute('value','Unarchive')
 
           unarchived_btn.classList.add('unarchivedbtn');
 
-          document.querySelector('#emails-view').append(unarchived_btn);
+          email_div.append(unarchived_btn);
 
           unarchived_btn.addEventListener('click', () => {
             fetch(`emails/${emails[i].id}`,{
@@ -137,14 +138,14 @@ function load_email(id) {
   .then(emailas => {
     
     let change;
-    if (emails.long == true) {
+    if (emailas.long == true) {
       change = 'long';
     }
     else {
       change = 'short'
     }
-
-    document.querySelector('#email').innerHTML = `<div>Change: ${change}</div><div>Subject: ${emailas.subject}</div><div>From: ${emailas.sender}</div><div>Date: ${emailas.timestamp}</div><div>${emailas.body}</div><div><img src="${emailas.photo}"></div><div id="like_div">Likes: ${like_count}</div>`;
+    
+    document.querySelector('#email').innerHTML = `<div>Change: ${change}</div><div>Subject: ${emailas.subject}</div><div>From: ${emailas.sender}</div><div>Date: ${emailas.timestamp}</div><div>${emailas.body}</div><div class="emailas_photo"><img src="${emailas.photo}"></div><div id="like_div">Likes: ${like_count}</div>`;
     
     let like = document.createElement("button");
     like.setAttribute("id", "like")
@@ -181,7 +182,7 @@ function likes(id) {
     })
   })
   .then(response => response.json())
-  document.querySelector('#like_div').innerHTML = like_count;
+  document.querySelector('#like_div').innerHTML = `Likes: ${like_count}`;
 
 }
 

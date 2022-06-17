@@ -39,7 +39,7 @@ def compose(request):
     body = data.get("body", "")
     photo = data.get("photo", "")
     change = data.get("long", "")
-
+    
     longshort = False
 
     if change=="0":
