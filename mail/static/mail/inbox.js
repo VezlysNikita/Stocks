@@ -139,26 +139,21 @@ function load_email(id) {
     
     let change;
     if (emailas.long == true) {
-      change = 'long';
+      change = `<img src="/static/mail/green.jpg" width="20px" height="auto">`;
     }
     else {
-      change = 'short'
+      change = `<img src="/static/mail/red-.jpg" width="20px" height="auto">`;
     }
     
     document.querySelector('#email').innerHTML = `<div>Change: ${change}</div><div>Subject: ${emailas.subject}</div><div>From: ${emailas.sender}</div><div>Date: ${emailas.timestamp}</div><div>${emailas.body}</div><div class="emailas_photo"><img src="${emailas.photo}"></div><div id="like_div">Likes: ${like_count}</div>`;
-    
-    let like = document.createElement("button");
-    like.setAttribute("id", "like")
-    like.setAttribute("placeholder", "like")
 
     let like_img = document.createElement("img");
     like_img.setAttribute("src", "/static/mail/like.png")
     like_img.setAttribute("id", "like_img")
 
-    like.append(like_img)
-    document.querySelector('#email').append(like)
+    document.querySelector('#email').append(like_img)
 
-    like.addEventListener('click', () => likes(id));
+    like_img.addEventListener('click', () => likes(id));
     });
 
   fetch(`emails/${id}`,{
