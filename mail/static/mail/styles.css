@@ -9,7 +9,18 @@ textarea {
 #like {
     width:50px;
     height: 30px;
-    background-color:rgb(131, 133, 224);
+    background-color: white;
+    border: none;
+}
+
+#like_img {
+    width: 70px;
+    height: auto;
+    border-radius: 30px;
+}
+
+#like_img:hover {
+    border: 2px solid rgb(192, 189, 189);
 }
 
 .email {
@@ -20,6 +31,10 @@ textarea {
     font-family: DrukWideBold;
     margin-bottom: 50px;
     margin-top: 25px;
+}
+
+.email:hover {
+    box-shadow: 5px 5px 10px 2px rgb(142, 168, 255);
 }
 
 #emails-view {
@@ -159,3 +174,4 @@ textarea {
 #logout {
     margin-top: 9px;
 }
+

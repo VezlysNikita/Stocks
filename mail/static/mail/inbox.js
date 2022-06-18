@@ -149,17 +149,16 @@ function load_email(id) {
     
     let like = document.createElement("button");
     like.setAttribute("id", "like")
-    like.setAttribute("class", "bi bi-hand-thumbs-up")
     like.setAttribute("placeholder", "like")
+
+    let like_img = document.createElement("img");
+    like_img.setAttribute("src", "/static/mail/like.png")
+    like_img.setAttribute("id", "like_img")
+
+    like.append(like_img)
     document.querySelector('#email').append(like)
 
     like.addEventListener('click', () => likes(id));
-    
-
-    let reply = document.createElement("BUTTON");
-    reply.innerHTML = "Reply";
-    document.querySelector('#email').append(reply)
-    reply.addEventListener('click', () => compose_email(emailas));
     });
 
   fetch(`emails/${id}`,{
