@@ -7,9 +7,9 @@ textarea {
 }
 
 #like {
-    width:150px;
-    height:70px;
-    background-color:rgb(224, 200, 131);
+    width:50px;
+    height: 30px;
+    background-color:rgb(131, 133, 224);
 }
 
 .email {
@@ -29,6 +29,7 @@ textarea {
 }
 
 #compose2 {
+    font-family:DrukWideBold;
     position:absolute;
     top:65%;
     size:100px;
@@ -56,7 +57,6 @@ textarea {
 #introdesc {
     position: absolute;
     top:50%;
-    margin-left:7px;
     font-family: var(--bs-font-sans-serif);
     font-size:20px;
 }
@@ -66,7 +66,7 @@ textarea {
 .intro {
     font-family: DrukWideBold;
     font-size: 70px;
-    color: linear-gradient( 94.3deg,  rgba(26,33,64,1) 10.9%, rgba(81,84,115,1) 87.1% );
+    color: rgb(81, 100, 185);
     height:600px;
     
     /*background-image: url(images/bluecircle.png);*/
@@ -89,8 +89,10 @@ textarea {
     font-family:DrukWideBold;
     border-radius: 25px;
     font-size: 13px;
-    padding-left: 7px;
-    padding-right: 7px;
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-right: 7px;
+    height: 30px;
 }
 
 .button-20:focus:not(:focus-visible),
@@ -122,18 +124,9 @@ textarea {
 }
 
 
-#logout {
-    color:red;
-}
-
-#logout:hover {
-    background-color:red;
-    color:white;
-}
-
 #useremail {
     margin-bottom:20px;
-    margin-top:10px;
+    margin-top:12px;
 }
 
 .emailas_photo {
@@ -150,4 +143,19 @@ textarea {
     width:135px;
     height: 30px;
     border-radius: 25px;
+}
+
+.archive_btn:hover {
+    background-color: #3a7bd5;
+    color:white;
+    
+}
+
+#nav_div {
+    display: flex;
+    justify-content: right;
+}
+
+#logout {
+    margin-top: 9px;
 }

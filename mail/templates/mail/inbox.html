@@ -2,18 +2,24 @@
 {% load static %}
 
 {% block body %}
-    <h2 id="useremail">{{ request.user.email }}</h2>
+    <div id="nav_div">
+        <h2 id="useremail">{{ request.user.email }}</h2>
+        
+        <button class="button-20" id="inbox">Inbox</button>
+        <button class="button-20" id="sent">Sent</button>
+        <button class="button-20" id="archived">Archived</button>
 
-    <button class="button-20" id="inbox">Inbox</button>
-    <button class="button-20" id="sent">Sent</button>
-    <button class="button-20" id="archived">Archived</button>
 
-
-    <button id="compose2" class="button-20">Compose</button>
-
-    <a id="logout" href="{% url 'logout' %}">Log Out</a>
+        
+        <!-- CHECH THIS LATER-->
+        <div id="logout">
+            <a href="{% url 'logout' %}"><img src="/static/mail/logout.png" width="30px" height="auto" id="logout"></a>
+        </div>
+        
+    </div>
     <hr>
-
+    
+    <button id="compose2">Compose</button>
     <div id="intro">
         <div class="introdiv">
             <div class="intro" id="title">$tockFull</div>
