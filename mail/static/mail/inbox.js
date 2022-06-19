@@ -48,7 +48,7 @@ function load_mailbox(mailbox) {
       for (let i = 0; i < emails.length; i++) {
         const email_div = document.createElement('div');
         email_div.classList.add('email');
-        email_div.innerHTML = `<div class="subject">Subject: ${emails[i].subject}</div><div class="from">From: ${emails[i].sender}</div><div class="image"><img src="${emails[i].photo}"></div><div class="date">Date: ${emails[i].timestamp}</div>`;
+        email_div.innerHTML = `<div class="subject">Subject: ${emails[i].subject}</div><div class="from">From: ${emails[i].sender}</div><div class="image"><img src="${emails[i].photo}"></div><div class="date">${emails[i].timestamp}</div>`;
 
         document.querySelector('#emails-view').append(email_div);
 
@@ -145,7 +145,7 @@ function load_email(id) {
       change = `<img src="/static/mail/red-.jpg" width="20px" height="auto">`;
     }
     
-    document.querySelector('#email').innerHTML = `<div>Change: ${change}</div><div>Subject: ${emailas.subject}</div><div>From: ${emailas.sender}</div><div>Date: ${emailas.timestamp}</div><div>${emailas.body}</div><div class="emailas_photo"><img src="${emailas.photo}"></div><div id="like_div">Likes: ${like_count}</div>`;
+    document.querySelector('#email').innerHTML = `<div>Change: ${change}</div><div>Subject: ${emailas.subject}</div><div>From: ${emailas.sender}</div><div>${emailas.timestamp}</div><div>${emailas.body}</div><div class="emailas_photo"><img src="${emailas.photo}"></div><div id="like_div">Likes: ${like_count}</div>`;
 
     let like_img = document.createElement("img");
     like_img.setAttribute("src", "/static/mail/like.png")
