@@ -48,7 +48,18 @@ function load_mailbox(mailbox) {
       for (let i = 0; i < emails.length; i++) {
         const email_div = document.createElement('div');
         email_div.classList.add('email');
-        email_div.innerHTML = `<div class="subject">Subject: ${emails[i].subject}</div><div class="from">From: ${emails[i].sender}</div><div class="image"><img src="${emails[i].photo}"></div><div class="date">${emails[i].timestamp}</div>`;
+        
+        let image;
+
+        if (emails[i].photo === "") {
+          image = ""
+        }
+        else {
+          image= `<img src="${emails[i].photo}"`
+        }
+
+
+        email_div.innerHTML = `<div class="subject">Subject: ${emails[i].subject}</div><div class="from">From: ${emails[i].sender}</div><div id="image">${image}</div><div class="date">${emails[i].timestamp}</div>`;
 
         document.querySelector('#emails-view').append(email_div);
 
